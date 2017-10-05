@@ -9,10 +9,17 @@ self.saveActionValue = function (param) {
     }
 };
 
-self.getTotalPoints = function () {
-    var obj = {};
-    cache.keys().forEach(function (t) { obj[t] = cache.get(t) });
-    return obj;
+self.getModulesScore = function () {
+    var modules = {};
+    cache.keys().forEach(function (t) {
+        var points = cache.get(t);
+        var total = 0;
+        points.forEach(function (v) {
+            total += parseInt(v);
+        });
+        modules[t] = total / points.length;
+    });
+    return modules;
 };
 
 function addValue(action, value) {
@@ -22,3 +29,4 @@ function addValue(action, value) {
     cache.put(action, values);
 }
 
+const modules = {};
