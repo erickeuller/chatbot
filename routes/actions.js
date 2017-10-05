@@ -8,13 +8,16 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    console.log(req.body);
+    console.log(req.body.result.fulfillment);
     var response;
     if (req.body.result.metadata.intentName === 'status_report') {
         response = buildReportText(service.getModulesScore());
     }
     else {
-        response = service.saveActionValue(req.body.result);
+        service.saveActionValue(req.body.result);
+        response = {
+            speech: req.body.result.fulfillment.speech
+        };
     }
     res.send(response);
 });
